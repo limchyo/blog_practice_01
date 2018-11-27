@@ -4,52 +4,32 @@
 <div class="container">
   <div class="blog-header">
     <h1 class="blog-title">{{ article.title }}</h1>
-    <p class="lead blog-description">The official blog with Bootstrap.</p>
   </div>
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8 blog-main">
       <div class="blog-post">
         <p>{{ article.content }}</p>
       </div>
-      <div>
+      <div class="comment">
         {% for comment in article.article_comments.all %}
-          <div>{{ comment.username }} : {{ comment.content }}</div>
+        {% if comment.approved_comment is True %}
+        <div>{{ comment.username }} : {{ comment.content }}
+        </div>
+        {% endif %}
         {% endfor %}
       </div>
       <div class="reply-form">
-        <form class="form-inline" method="post" action="">
+        <form method="post" action="" class="form-inline">
           {% csrf_token %}
-          <div>
-            <div class="form-group">
-              <input placeholder="아이디" class="form-control" name="username" />
-            </div>
-            <div class="form-group">
-              <input placeholder="내용" class="form-control" name="content" />
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-default">댓글 달기</button>
-            </div>
+          <div class="form-group">
+            <input name="username" class="form-control" placeholder="이름">
           </div>
+          <div class="form-group">
+            <input name="content" class="form-control" placeholder="내용">
+          </div>
+          <button type="submit" class="btn btn-default">댓글 달기</button>
         </form>
       </div>
-    </div>
-    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-      <div class="sidebar-module">
-        <h4>Categories</h4>
-        <ol class="list-unstyled">
-          <li><a href="/">All</a></li>
-          {% for alias, category in category_list %}
-          <li><a href="/?category={{ alias }}">{{ category }}</a></li>
-          {% endfor %}
-      </div>
-      <div class="sidebar-module"></div>
-        <h4>HashTags</h4>
-        <ol class="list-unstyled">
-          {% for hashtag in hashtag_list %}
-          <li><a href="/?hashtag={{ hashtag }}">#{{ hashtag }}</a></li>
-          {% endfor %}
-        </ol>
-      <div class="sidebar-module"></div>
     </div>
   </div>
 </div>

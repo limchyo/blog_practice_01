@@ -36,6 +36,7 @@ class Comment(models.Model):
     )
     username = models.CharField(max_length=50)
     content = models.CharField(max_length=200)
+    approved_comment = models.BooleanField(default=False)
 
     def __str__(self):
         return "({}) {}".format(self.article.title, self.content)
